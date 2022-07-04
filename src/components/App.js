@@ -46,17 +46,44 @@ class App extends Component{
             }
         );
     }
+
+    // to do 아이템 토글하기
+    handleToggle = (id) => {
+        const {todos} = this.state;
+        const index = todos.findIndex(todo => todo.id === id);
+
+        // 찾은 데이터의 done 값을 반전
+        const toggled = {
+            ...todos[index],
+            done: !todos[index].done
+        };
+
+        // slice를 사용하여 우리가 찾은 index 전후의 데이터들을 복사합니다.
+        // 그리고 그 사이에는 변경된 to do 객체를 넣어 줍니다.
+        this.setState(
+            {
+                todos:[
+                    ...todos.slice(0,index),
+                    toggled,
+                    ...todos.slice(index+1, todos.length)
+                ]
+            }
+        );
+    }
+
+
     render(){
         const {input, todos} =this.state;
         const {
             handleChange,
-            handleInsert
+            handleInsert,
+            handleToggle
         } = this;
 
         return(
            <PageTemplate>
             <TodoInput onChange={handleChange} onInsert = {handleInsert} value={input}/>
-            <TodoList todos={todos}/>
+            <TodoList todos={todos} onToggle={handleToggle}/>
            </PageTemplate>
         );
     }
