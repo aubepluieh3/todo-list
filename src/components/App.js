@@ -49,12 +49,13 @@ class App extends Component{
     render(){
         const {input, todos} =this.state;
         const {
-            handleChange
+            handleChange,
+            handleInsert
         } = this;
 
         return(
            <PageTemplate>
-            <TodoInput onChange={handleChange} value={input}/>
+            <TodoInput onChange={handleChange} onInsert = {handleInsert} value={input}/>
             <TodoList todos={todos}/>
            </PageTemplate>
         );
