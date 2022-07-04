@@ -71,19 +71,37 @@ class App extends Component{
         );
     }
 
+    // 선택한 id 배열에서 제거
+    hanldeRemove = (id) => {
+        const {todos} = this.state;
+        const index = todos.findIndex(todo => todo.id ===id);
+
+        //slice 전후 데이터들을 복사하고, 우리가 찾은 index는 제외
+        this.setState(
+            {
+                todos:[
+                    ...todos.slice(0,index),
+                    ...todos.slice(index+1, todos.length)
+                ]
+            }
+        );
+
+    }
+
 
     render(){
         const {input, todos} =this.state;
         const {
             handleChange,
             handleInsert,
-            handleToggle
+            handleToggle,
+            hanldeRemove
         } = this;
 
         return(
            <PageTemplate>
             <TodoInput onChange={handleChange} onInsert = {handleInsert} value={input}/>
-            <TodoList todos={todos} onToggle={handleToggle}/>
+            <TodoList todos={todos} onToggle={handleToggle} onRemove={hanldeRemove}/>
            </PageTemplate>
         );
     }
